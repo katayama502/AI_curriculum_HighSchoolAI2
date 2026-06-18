@@ -235,6 +235,11 @@ button{border:none;cursor:pointer;background:none;font-family:inherit;font-size:
 }
 .card:hover{border-color:transparent;box-shadow:var(--sh-lg);transform:translateY(-4px)}
 .card.opacity-75{opacity:.75}
+.card-playable{cursor:pointer}
+.card-playable:focus-visible{
+  outline:3px solid rgba(14,165,233,.35);
+  outline-offset:3px;
+}
 
 /* ---- YouTube サムネイル ---- */
 .card-thumb{
