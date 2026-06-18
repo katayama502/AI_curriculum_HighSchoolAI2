@@ -1,146 +1,170 @@
-import { useState, useCallback, useRef } from 'react';
-import VideoModal from './components/Modal/VideoModal';
-import { COURSES } from './data/courses';
-import { useUserData } from './hooks/useUserData';
-import { useFilters } from './hooks/useFilters';
-import Sidebar from './components/Layout/Sidebar';
-import Header from './components/Layout/Header';
-import HomeView from './components/Views/HomeView';
-import CoursesView from './components/Views/CoursesView';
-import DashboardView from './components/Views/DashboardView';
-import FavoritesView from './components/Views/FavoritesView';
-import BookmarksView from './components/Views/BookmarksView';
+import React, { useState, useMemo, useCallback } from 'react'
+import { COURSES } from './data/courses.js'
+import { useDarkMode } from './hooks/useDarkMode.js'
+import { useCourseProgress } from './hooks/useCourseProgress.js'
+import { CourseProgressContext } from './context/CourseProgressContext.jsx'
+import Header from './components/Header.jsx'
+import Hero from './components/Hero.jsx'
+import CategorySpotlight from './components/CategorySpotlight.jsx'
+import ProgressDashboard from './components/ProgressDashboard.jsx'
+import FilterBar from './components/FilterBar.jsx'
+import CourseCard from './components/CourseCard.jsx'
+import CourseModal from './components/CourseModal.jsx'
+import Footer from './components/Footer.jsx'
 
 export default function App() {
-  const [view, setView] = useState('home');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [toast, setToast] = useState({ msg: '', show: false });
-  const [playingVideo, setPlayingVideo] = useState(null);
-  const toastTimer = useRef(null);
+  const { isDark, toggle } = useDarkMode()
+  const progress = useCourseProgress()
 
-  const userData = useUserData();
-  const filters = useFilters();
-  const { examOnly, setExamOnly } = filters;
+  // Filter state
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedLevel, setSelectedLevel] = useState('all')
+  const [selectedType, setSelectedType] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
+  const [showUnlearnedOnly, setShowUnlearnedOnly] = useState(false)
 
-  function showToast(msg) {
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    setToast({ msg, show: true });
-    toastTimer.current = setTimeout(() => setToast(t => ({ ...t, show: false })), 2400);
-  }
+  // Modal state
+  const [activeCourse, setActiveCourse] = useState(null)
 
-  function navigate(v) {
-    setView(v);
-    setSidebarOpen(false);
-  }
+  // Filter logic (AND)
+  const filteredCourses = useMemo(() => {
+    return COURSES.filter((course) => {
+      const matchCategory = selectedCategory === 'all' || course.category === selectedCategory
+      const matchLevel = selectedLevel === 'all' || course.level === selectedLevel
+      const matchType = selectedType === 'all' || course.type === selectedType
+      const q = searchQuery.trim().toLowerCase()
+      const matchSearch =
+        !q ||
+        course.title.toLowerCase().includes(q) ||
+        course.description.toLowerCase().includes(q) ||
+        (course.tags && course.tags.some((t) => t.toLowerCase().includes(q)))
+      const matchFav = !showFavoritesOnly || progress.favorites.has(course.id)
+      const matchUnlearned = !showUnlearnedOnly || !progress.completed.has(course.id)
+      return matchCategory && matchLevel && matchType && matchSearch && matchFav && matchUnlearned
+    })
+  }, [selectedCategory, selectedLevel, selectedType, searchQuery, showFavoritesOnly, showUnlearnedOnly, progress.favorites, progress.completed])
 
-  function navigateToCategory(cat) {
-    filters.setCat(cat);
-    filters.setLevel('all');
-    filters.setType('all');
-    setView('courses');
-    setSidebarOpen(false);
-  }
+  const scrollToGallery = useCallback(() => {
+    document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
 
-  function navigateToLevel(lv) {
-    filters.setLevel(lv);
-    filters.setCat('all');
-    filters.setType('all');
-    setView('courses');
-    setSidebarOpen(false);
-  }
+  const handleSelectCategory = useCallback((cat) => {
+    setSelectedCategory(cat)
+    setSelectedLevel('all')
+    setSelectedType('all')
+    setSearchQuery('')
+    scrollToGallery()
+  }, [scrollToGallery])
 
-  function handleSearch(q) {
-    filters.setQuery(q);
-    if (view !== 'courses' && view !== 'home') setView('courses');
-  }
+  const handleReset = useCallback(() => {
+    setSelectedCategory('all')
+    setSelectedLevel('all')
+    setSelectedType('all')
+    setSearchQuery('')
+    setShowFavoritesOnly(false)
+    setShowUnlearnedOnly(false)
+  }, [])
 
-  function handleTagClick(tag) {
-    filters.setQuery(tag);
-    setView('courses');
-  }
-
-  const handleToggleFav = useCallback((id) => {
-    return userData.toggleFav(id);
-  }, [userData]);
-
-  const handleToggleBk = useCallback((id) => {
-    return userData.toggleBk(id);
-  }, [userData]);
-
-  const handleSetProg = useCallback((id, status) => {
-    userData.setProg(id, status);
-  }, [userData]);
-
-  // Close sidebar on overlay click
-  function handleOverlayClick() {
-    setSidebarOpen(false);
-  }
-
-  // Close progress dropdowns on outside click — handled in CourseCard component
-
-  const filterProps = {
-    cat: filters.cat,
-    level: filters.level,
-    type: filters.type,
-    filtered: filters.filtered,
-    onCat: filters.setCat,
-    onLevel: filters.setLevel,
-    onType: filters.setType,
-  };
-
-  const commonCardProps = {
-    userData,
-    onToggleFav: handleToggleFav,
-    onToggleBk: handleToggleBk,
-    onSetProg: handleSetProg,
-    onTagClick: handleTagClick,
-    onToast: showToast,
-    onPlay: setPlayingVideo,
-  };
+  const handleActivateFavoritesFilter = useCallback(() => {
+    setShowFavoritesOnly(true)
+    setShowUnlearnedOnly(false)
+    scrollToGallery()
+  }, [scrollToGallery])
 
   return (
-    <>
-      {sidebarOpen && <div id="overlay" className="show" onClick={handleOverlayClick}></div>}
-      {!sidebarOpen && <div id="overlay"></div>}
-      <div className="layout">
-          <Sidebar currentView={view} onNavigate={navigate} sidebarOpen={sidebarOpen} />
-        <div className="main">
-          <Header
-            query={filters.query}
-            onSearch={handleSearch}
-            onMenuClick={() => setSidebarOpen(v => !v)}
-            totalCourses={COURSES.length}
-          />
-          <div className="content">
-            {view === 'home' && (
-              <HomeView
-                onNavigateToCategory={navigateToCategory}
-                onNavigateToLevel={navigateToLevel}
-              />
-            )}
-            {view === 'courses' && (
-              <CoursesView filters={filterProps} {...commonCardProps} examOnly={examOnly} onExamToggle={setExamOnly} />
-            )}
-            {view === 'dashboard' && (
-              <DashboardView {...commonCardProps} />
-            )}
-            {view === 'favorites' && (
-              <FavoritesView {...commonCardProps} />
-            )}
-            {view === 'bookmarks' && (
-              <BookmarksView {...commonCardProps} />
-            )}
-          </div>
-        </div>
+    <CourseProgressContext.Provider value={progress}>
+      <div className="min-h-screen bg-paper dark:bg-gray-950 transition-colors duration-300">
+        <Header
+          isDark={isDark}
+          onToggleDark={toggle}
+          completedCount={progress.completed.size}
+          totalCount={COURSES.length}
+        />
+
+        <main>
+          <Hero />
+
+          <CategorySpotlight onSelectCategory={handleSelectCategory} />
+
+          <ProgressDashboard onFavoritesFilter={handleActivateFavoritesFilter} />
+
+          {/* Card gallery section */}
+          <section id="gallery" className="min-h-screen">
+            {/* Section header */}
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-4">
+              <div className="text-center mb-10">
+                <span className="inline-block text-sm font-semibold tracking-wider uppercase text-gray-400 dark:text-gray-500 mb-3">
+                  学習コース
+                </span>
+                <h2 className="font-jakarta font-extrabold text-3xl sm:text-4xl text-ink dark:text-white mb-3">
+                  気になるコースから始めよう
+                </h2>
+                <p className="text-gray-500 dark:text-gray-400 text-base max-w-xl mx-auto leading-relaxed">
+                  カードをクリックすると詳しい解説や動画を確認できます。
+                </p>
+              </div>
+            </div>
+
+            <FilterBar
+              selectedCategory={selectedCategory}
+              selectedLevel={selectedLevel}
+              selectedType={selectedType}
+              searchQuery={searchQuery}
+              onCategoryChange={setSelectedCategory}
+              onLevelChange={setSelectedLevel}
+              onTypeChange={setSelectedType}
+              onSearchChange={setSearchQuery}
+              resultCount={filteredCourses.length}
+              showFavoritesOnly={showFavoritesOnly}
+              onToggleFavorites={() => setShowFavoritesOnly((v) => !v)}
+              showUnlearnedOnly={showUnlearnedOnly}
+              onToggleUnlearned={() => setShowUnlearnedOnly((v) => !v)}
+              onReset={handleReset}
+            />
+
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+              {filteredCourses.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {filteredCourses.map((course) => (
+                    <CourseCard
+                      key={course.id}
+                      course={course}
+                      onClick={() => setActiveCourse(course)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                /* Empty state */
+                <div className="flex flex-col items-center justify-center py-24 text-center">
+                  <div className="text-6xl mb-6" role="img" aria-label="見つかりません">
+                    🔍
+                  </div>
+                  <h3 className="font-bold text-xl text-ink dark:text-white mb-2">
+                    条件に合うコースがありません
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mb-6 max-w-xs leading-relaxed">
+                    検索ワードやフィルタを変えてみると見つかるかもしれません。
+                  </p>
+                  <button
+                    onClick={handleReset}
+                    className="px-6 py-2.5 bg-ink dark:bg-white text-white dark:text-ink font-semibold rounded-xl text-sm hover:opacity-80 transition-opacity"
+                  >
+                    フィルタをリセット
+                  </button>
+                </div>
+              )}
+            </div>
+          </section>
+        </main>
+
+        <Footer />
+
+        {/* Modal */}
+        {activeCourse && (
+          <CourseModal course={activeCourse} onClose={() => setActiveCourse(null)} />
+        )}
       </div>
-      {playingVideo && <VideoModal course={playingVideo} onClose={() => setPlayingVideo(null)} />}
-      <div
-        id="toast"
-        className={toast.show ? 'show' : ''}
-        style={{ pointerEvents: 'none' }}
-      >
-        {toast.msg}
-      </div>
-    </>
-  );
+    </CourseProgressContext.Provider>
+  )
 }
