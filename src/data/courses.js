@@ -3,16 +3,16 @@
 // ============================================================
 
 export const CATEGORIES = {
-  basics:      { label: 'IT基礎',        icon: 'fa-microchip',     color: '#6366f1' },
-  programming: { label: 'プログラミング', icon: 'fa-code',          color: '#0ea5e9' },
-  network:     { label: 'ネットワーク',   icon: 'fa-network-wired', color: '#14b8a6' },
-  database:    { label: 'データベース',   icon: 'fa-database',      color: '#f59e0b' },
-  ai_ml:       { label: 'AI・機械学習',   icon: 'fa-brain',         color: '#8b5cf6' },
-  ai_security: { label: 'AIセキュリティ', icon: 'fa-shield-halved', color: '#ef4444' },
-  security:    { label: 'セキュリティ',   icon: 'fa-lock',          color: '#f97316' },
-  cloud:       { label: 'クラウド',       icon: 'fa-cloud',         color: '#3b82f6' },
-  business:    { label: 'ビジネス技術',   icon: 'fa-briefcase',     color: '#10b981' },
-  paper:       { label: '論文・研究',     icon: 'fa-file-lines',    color: '#6b7280' },
+  basics:      { label: 'IT基礎',        icon: 'fa-microchip',     color: '#6366f1', emoji: '💻', tagline: 'IT技術の土台',          description: 'CPU・OS・アルゴリズム・論理回路など、あらゆるIT技術の根幹となる基礎知識。',                                     gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', accentSoft: '#eef2ff' },
+  programming: { label: 'プログラミング', icon: 'fa-code',          color: '#0ea5e9', emoji: '⌨️', tagline: 'コードで世界を動かす',   description: 'Python・JavaScript・Git・React など実践的なプログラミングスキルを体系的に習得。',                            gradient: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)', accentSoft: '#e0f2fe' },
+  network:     { label: 'ネットワーク',   icon: 'fa-network-wired', color: '#14b8a6', emoji: '🌐', tagline: 'つながる仕組みを知る',   description: 'TCP/IP・HTTP・ルーティングなど、インターネットと通信の仕組みを深く理解する。',                               gradient: 'linear-gradient(135deg, #14b8a6 0%, #2dd4bf 100%)', accentSoft: '#ccfbf1' },
+  database:    { label: 'データベース',   icon: 'fa-database',      color: '#f59e0b', emoji: '🗄️', tagline: 'データを制する者が',     description: 'SQL・設計・インデックス・NoSQLまで、データ管理の技術を実践的に学ぶ。',                                         gradient: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)', accentSoft: '#fef3c7' },
+  ai_ml:       { label: 'AI・機械学習',   icon: 'fa-brain',         color: '#8b5cf6', emoji: '🤖', tagline: 'AIの仕組みと活用法',    description: '機械学習・深層学習・LLM・RAGまで、AI技術の理論と実装を網羅的に学ぶ。',                                          gradient: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)', accentSoft: '#ede9fe' },
+  ai_security: { label: 'AIセキュリティ', icon: 'fa-shield-halved', color: '#ef4444', emoji: '🛡️', tagline: 'AIを安全に使う技術',    description: 'AI倫理・プロンプトインジェクション・敵対的攻撃など、AI特有のリスクと対策。',                                    gradient: 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)', accentSoft: '#fee2e2' },
+  security:    { label: 'セキュリティ',   icon: 'fa-lock',          color: '#f97316', emoji: '🔐', tagline: '守る技術を身につける',   description: '暗号・OWASP・ペネトレーションテスト・インシデント対応など情報セキュリティ全般。',                               gradient: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)', accentSoft: '#ffedd5' },
+  cloud:       { label: 'クラウド',       icon: 'fa-cloud',         color: '#3b82f6', emoji: '☁️', tagline: 'クラウドで拡張する',    description: 'AWS・Docker・Kubernetes・Terraformなど、現代のインフラ技術を実践的に学ぶ。',                                  gradient: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)', accentSoft: '#dbeafe' },
+  business:    { label: 'ビジネス技術',   icon: 'fa-briefcase',     color: '#10b981', emoji: '💼', tagline: '現場で即使えるスキル',   description: 'アジャイル・DevOps・CI/CD・ドキュメント作成など、チーム開発に必要な実務スキル。',                              gradient: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)', accentSoft: '#d1fae5' },
+  paper:       { label: '論文・研究',     icon: 'fa-file-lines',    color: '#6b7280', emoji: '📄', tagline: '最先端研究を読む',       description: 'Transformer・BERT・GPT-4・MapReduceなど、IT分野を変えた歴史的論文を読み解く。',                              gradient: 'linear-gradient(135deg, #6b7280 0%, #9ca3af 100%)', accentSoft: '#f3f4f6' },
 };
 
 export const LEVELS = {
