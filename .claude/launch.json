@@ -5,7 +5,8 @@
       "name": "it-portal",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview", "--", "--port", "3456"],
-      "port": 3456
+      "port": 3456,
+      "autoPort": false
     }
   ]
 }

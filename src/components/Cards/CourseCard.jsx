@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CATEGORIES, LEVELS, TYPES } from '../../data/courses';
 
-export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast }) {
+export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast, onPlay }) {
   const [dropOpen, setDropOpen] = useState(false);
 
   const cat = CATEGORIES[course.category] || { label: course.category, icon: 'fa-circle', color: '#64748b' };
@@ -49,7 +49,7 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
   if (course.type === 'youtube' && course.youtubeId) {
     const thumbUrl = `https://img.youtube.com/vi/${course.youtubeId}/hqdefault.jpg`;
     topVisual = (
-      <div className="card-thumb">
+      <div className="card-thumb" onClick={() => onPlay && onPlay(course)} style={{ cursor: 'pointer' }}>
         <img
           src={thumbUrl}
           alt={course.title}
@@ -64,16 +64,17 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
       </div>
     );
   } else {
-    const grad = `linear-gradient(135deg,${cat.color}22,${cat.color}44)`;
+    const grad = `linear-gradient(135deg, ${cat.color}cc 0%, ${cat.color}66 100%)`;
     topVisual = (
-      <div className="card-banner" style={{ background: grad }}>
-        <div className="banner-icon" style={{ background: cat.color }}>
+      <div className="card-thumb-placeholder" style={{ background: grad }}>
+        <div className="placeholder-icon">
           <i className={`fa-solid ${cat.icon}`}></i>
         </div>
-        <div className="banner-text">
-          <div className="banner-cat">{cat.label}</div>
-          <div className="banner-type"><i className={tp.icon}></i> {tp.label}</div>
-        </div>
+        {course.type === 'youtube' && (
+          <div className="placeholder-yt"><i className="fa-brands fa-youtube"></i></div>
+        )}
+        <div className="placeholder-label">{tp.label}</div>
+        <div className="placeholder-title">{course.title.slice(0, 40)}{course.title.length > 40 ? '…' : ''}</div>
       </div>
     );
   }
@@ -139,9 +140,15 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
             </div>
           )}
         </div>
-        <a href={course.url} target="_blank" rel="noopener noreferrer" className="open-btn">
-          <i className="fa-solid fa-arrow-up-right-from-square"></i>開く
-        </a>
+        {course.youtubeId ? (
+          <button className="open-btn" onClick={e => { e.stopPropagation(); onPlay && onPlay(course); }}>
+            <i className="fa-brands fa-youtube"></i>視聴する
+          </button>
+        ) : (
+          <a href={course.url} target="_blank" rel="noopener noreferrer" className="open-btn">
+            <i className="fa-solid fa-arrow-up-right-from-square"></i>開く
+          </a>
+        )}
       </div>
     </div>
   );

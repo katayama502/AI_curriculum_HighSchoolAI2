@@ -1,6 +1,6 @@
 import CourseCard from './CourseCard';
 
-export default function CardGrid({ courses, userData, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast }) {
+export default function CardGrid({ courses, userData, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast, onPlay }) {
   if (!courses.length) {
     return (
       <div className="empty" style={{ gridColumn: '1/-1' }}>
@@ -24,6 +24,7 @@ export default function CardGrid({ courses, userData, onToggleFav, onToggleBk, o
           onSetProg={onSetProg}
           onTagClick={onTagClick}
           onToast={onToast}
+          onPlay={onPlay}
         />
       ))}
     </>

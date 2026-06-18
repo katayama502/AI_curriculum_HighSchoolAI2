@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
+import VideoModal from './components/Modal/VideoModal';
 import { COURSES } from './data/courses';
 import { useUserData } from './hooks/useUserData';
 import { useFilters } from './hooks/useFilters';
@@ -14,6 +15,7 @@ export default function App() {
   const [view, setView] = useState('home');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [toast, setToast] = useState({ msg: '', show: false });
+  const [playingVideo, setPlayingVideo] = useState(null);
   const toastTimer = useRef(null);
 
   const userData = useUserData();
@@ -93,6 +95,7 @@ export default function App() {
     onSetProg: handleSetProg,
     onTagClick: handleTagClick,
     onToast: showToast,
+    onPlay: setPlayingVideo,
   };
 
   return (
@@ -130,6 +133,7 @@ export default function App() {
           </div>
         </div>
       </div>
+      {playingVideo && <VideoModal course={playingVideo} onClose={() => setPlayingVideo(null)} />}
       <div
         id="toast"
         className={toast.show ? 'show' : ''}

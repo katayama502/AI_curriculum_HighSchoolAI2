@@ -1,7 +1,7 @@
 import FilterBar from '../Filters/FilterBar';
 import CardGrid from '../Cards/CardGrid';
 
-export default function CoursesView({ filters, userData, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast, examOnly, onExamToggle }) {
+export default function CoursesView({ filters, userData, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast, onPlay, examOnly, onExamToggle }) {
   const { cat, level, type, filtered, onCat, onLevel, onType } = filters;
 
   return (
@@ -33,6 +33,7 @@ export default function CoursesView({ filters, userData, onToggleFav, onToggleBk
           onSetProg={onSetProg}
           onTagClick={onTagClick}
           onToast={onToast}
+          onPlay={onPlay}
         />
       </div>
     </div>

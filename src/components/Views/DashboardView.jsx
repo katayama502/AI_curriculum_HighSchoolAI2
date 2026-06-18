@@ -1,7 +1,7 @@
 import { COURSES, CATEGORIES } from '../../data/courses';
 import CardGrid from '../Cards/CardGrid';
 
-export default function DashboardView({ userData, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast }) {
+export default function DashboardView({ userData, onToggleFav, onToggleBk, onSetProg, onTagClick, onToast, onPlay }) {
   const { data, getProg, isFav, isBk } = userData;
   const total = COURSES.length;
   const done = Object.values(data.prog).filter(v => v === 'completed').length;
@@ -97,6 +97,7 @@ export default function DashboardView({ userData, onToggleFav, onToggleBk, onSet
               onSetProg={onSetProg}
               onTagClick={onTagClick}
               onToast={onToast}
+              onPlay={onPlay}
             />
           )}
         </div>
