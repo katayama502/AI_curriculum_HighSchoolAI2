@@ -9,6 +9,20 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
   const tp = TYPES[course.type] || { label: course.type, icon: 'fa-solid fa-circle', color: '#64748b' };
 
   const progLabels = { none: '未着手', 'in-progress': '学習中', completed: '完了' };
+  const canPlay = Boolean(course.youtubeId);
+
+  function handleCardClick(e) {
+    if (!canPlay || e.target.closest('button, a, .tag')) return;
+    onPlay && onPlay(course);
+  }
+
+  function handleCardKeyDown(e) {
+    if (!canPlay || e.target !== e.currentTarget) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onPlay && onPlay(course);
+    }
+  }
 
   function handleFav(e) {
     e.stopPropagation();
@@ -49,7 +63,7 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
   if (course.type === 'youtube' && course.youtubeId) {
     const thumbUrl = `https://img.youtube.com/vi/${course.youtubeId}/hqdefault.jpg`;
     topVisual = (
-      <div className="card-thumb" onClick={() => onPlay && onPlay(course)} style={{ cursor: 'pointer' }}>
+      <div className="card-thumb">
         <img
           src={thumbUrl}
           alt={course.title}
@@ -84,7 +98,15 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
     : <span><i className="fa-solid fa-tv"></i>{course.channel || ''}</span>;
 
   return (
-    <div className={`card${prog === 'completed' ? ' opacity-75' : ''}`} data-id={course.id}>
+    <div
+      className={`card${prog === 'completed' ? ' opacity-75' : ''}${canPlay ? ' card-playable' : ''}`}
+      data-id={course.id}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      tabIndex={canPlay ? 0 : undefined}
+      role={canPlay ? 'button' : undefined}
+      aria-label={canPlay ? `${course.title}をポップアップで視聴` : undefined}
+    >
       {topVisual}
       <div className="card-body">
         <div className="card-top">
