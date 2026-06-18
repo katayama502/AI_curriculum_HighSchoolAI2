@@ -9,15 +9,13 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
   const tp = TYPES[course.type] || { label: course.type, icon: 'fa-solid fa-circle', color: '#64748b' };
 
   const progLabels = { none: '未着手', 'in-progress': '学習中', completed: '完了' };
-  const canPlay = Boolean(course.youtubeId);
-
   function handleCardClick(e) {
-    if (!canPlay || e.target.closest('button, a, .tag')) return;
+    if (e.target.closest('button, a, .tag')) return;
     onPlay && onPlay(course);
   }
 
   function handleCardKeyDown(e) {
-    if (!canPlay || e.target !== e.currentTarget) return;
+    if (e.target !== e.currentTarget) return;
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onPlay && onPlay(course);
@@ -99,13 +97,13 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
 
   return (
     <div
-      className={`card${prog === 'completed' ? ' opacity-75' : ''}${canPlay ? ' card-playable' : ''}`}
+      className={`card card-playable${prog === 'completed' ? ' opacity-75' : ''}`}
       data-id={course.id}
       onClick={handleCardClick}
       onKeyDown={handleCardKeyDown}
-      tabIndex={canPlay ? 0 : undefined}
-      role={canPlay ? 'button' : undefined}
-      aria-label={canPlay ? `${course.title}をポップアップで視聴` : undefined}
+      tabIndex={0}
+      role="button"
+      aria-label={`${course.title}を開く`}
     >
       {topVisual}
       <div className="card-body">
@@ -162,15 +160,12 @@ export default function CourseCard({ course, isFav, isBk, prog, onToggleFav, onT
             </div>
           )}
         </div>
-        {course.youtubeId ? (
-          <button className="open-btn" onClick={e => { e.stopPropagation(); onPlay && onPlay(course); }}>
-            <i className="fa-brands fa-youtube"></i>視聴する
-          </button>
-        ) : (
-          <a href={course.url} target="_blank" rel="noopener noreferrer" className="open-btn">
-            <i className="fa-solid fa-arrow-up-right-from-square"></i>開く
-          </a>
-        )}
+        <button className="open-btn" onClick={e => { e.stopPropagation(); onPlay && onPlay(course); }}>
+          {course.type === 'youtube'
+            ? <><i className="fa-brands fa-youtube"></i>視聴する</>
+            : <><i className="fa-solid fa-arrow-up-right-from-square"></i>開く</>
+          }
+        </button>
       </div>
     </div>
   );

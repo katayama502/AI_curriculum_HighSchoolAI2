@@ -607,6 +607,35 @@ button{border:none;cursor:pointer;background:none;font-family:inherit;font-size:
 }
 .modal-yt-link:hover { background: #ff444411; }
 
+.modal-noembed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 24px 36px;
+  background: var(--bg);
+  margin: 16px 0 0;
+}
+.modal-noembed-icon { font-size: 2.8rem; opacity: 0.85; }
+.modal-noembed-label { font-size: 0.82rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.modal-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 11px 26px;
+  background: var(--sky-2);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.modal-open-btn.yt { background: #ff0000; }
+.modal-open-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
 /* =============== 全カードサムネイル（プレースホルダー） =============== */
 .card-thumb-placeholder {
   position: relative;
