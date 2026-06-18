@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT学習ポータル | 情報大学</title>
+  <meta name="description" content="情報系の基礎から発展・AI活用・AIセキュリティまで体系的に学べるEラーニングポータル">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="overlay"></div>
+<div class="layout">
+
+<!-- ===== SIDEBAR ===== -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-wrap">
+      <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div>
+        <div class="logo-name">IT学習ポータル</div>
+        <div class="logo-sub">情報大学 E-Learning</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-sec">メニュー</div>
+    <div class="nav-item active" data-view="home"><div class="nicon"><i class="fa-solid fa-house"></i></div>ホーム</div>
+    <div class="nav-item" data-view="courses"><div class="nicon"><i class="fa-solid fa-book-open"></i></div>コース一覧</div>
+    <div class="nav-item" data-view="dashboard"><div class="nicon"><i class="fa-solid fa-chart-pie"></i></div>ダッシュボード</div>
+    <div class="nav-sec" style="margin-top:8px">マイページ</div>
+    <div class="nav-item" data-view="favorites"><div class="nicon"><i class="fa-solid fa-heart"></i></div>お気に入り</div>
+    <div class="nav-item" data-view="bookmarks"><div class="nicon"><i class="fa-solid fa-bookmark"></i></div>保存済み</div>
+  </nav>
+  <div class="sidebar-foot">🔒 データはブラウザに保存<br>© 2026 情報大学</div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+  <!-- Header -->
+  <header class="header">
+    <button id="menu-btn" aria-label="メニュー"><i class="fa-solid fa-bars"></i></button>
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass si"></i>
+      <input id="search-input" type="search" placeholder="キーワード・タグで検索…" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="header-right">
+      <button id="search-toggle-btn" aria-label="検索"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <div class="hpill"><i class="fa-solid fa-book-open"></i><span class="pill-txt">全 58 コース</span></div>
+    </div>
+  </header>
+
+  <!-- モバイル検索バー -->
+  <div class="mobile-search" id="mobile-search">
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass si"></i>
+      <input id="mobile-search-input" type="search" placeholder="キーワード・タグで検索…" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== HOME ===== -->
+    <div id="view-home" class="view">
+      <div class="hero">
+        <div class="hero-orb1"></div><div class="hero-orb2"></div><div class="hero-grid"></div>
+        <div class="hero-inner">
+          <div class="hero-eyebrow"><i class="fa-solid fa-graduation-cap"></i>情報大学 Eラーニングポータル</div>
+          <h1>情報技術の<span class="hl">基礎から最先端</span>まで<br>自分のペースで学ぶ</h1>
+          <p>IT基礎・プログラミング・AI・AIセキュリティ・クラウド・論文まで、体系的に学べるコースを一か所に集約。YouTube動画・論文・記事をカード形式で管理し、進捗・お気に入り・保存をパーソナライズ。</p>
+          <div class="hero-stats">
+            <div class="hstat"><div class="n">58</div><div class="l">コース</div></div>
+            <div class="hstat"><div class="n">10</div><div class="l">カテゴリー</div></div>
+            <div class="hstat"><div class="n">3</div><div class="l">レベル</div></div>
+            <div class="hstat"><div class="n">∞</div><div class="l">いつでも</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-head">カテゴリーから探す</div>
+      <div class="cat-grid">
+        <div class="cat-card" data-sv="courses" data-sc="basics" style="--cc:#6366f1">
+          <div class="cat-icon" style="background:#6366f120;color:#6366f1"><i class="fa-solid fa-microchip"></i></div>
+          <div class="cat-name">IT基礎</div><div class="cat-desc">コンピュータ・OS・情報理論</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="programming" style="--cc:#0ea5e9">
+          <div class="cat-icon" style="background:#0ea5e920;color:#0ea5e9"><i class="fa-solid fa-code"></i></div>
+          <div class="cat-name">プログラミング</div><div class="cat-desc">Python・JS・設計・Git</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="network" style="--cc:#14b8a6">
+          <div class="cat-icon" style="background:#14b8a620;color:#14b8a6"><i class="fa-solid fa-network-wired"></i></div>
+          <div class="cat-name">ネットワーク</div><div class="cat-desc">TCP/IP・DNS・ゼロトラスト</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="database" style="--cc:#f59e0b">
+          <div class="cat-icon" style="background:#f59e0b20;color:#f59e0b"><i class="fa-solid fa-database"></i></div>
+          <div class="cat-name">データベース</div><div class="cat-desc">SQL・NoSQL・設計・最適化</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="ai_ml" style="--cc:#8b5cf6">
+          <div class="cat-icon" style="background:#8b5cf620;color:#8b5cf6"><i class="fa-solid fa-brain"></i></div>
+          <div class="cat-name">AI・機械学習</div><div class="cat-desc">ML・深層学習・LLM・RAG</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="ai_security" style="--cc:#ef4444">
+          <div class="cat-icon" style="background:#ef444420;color:#ef4444"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="cat-name">AIセキュリティ</div><div class="cat-desc">敵対的攻撃・LLM脆弱性・EU AI Act</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="security" style="--cc:#f97316">
+          <div class="cat-icon" style="background:#f9731620;color:#f97316"><i class="fa-solid fa-lock"></i></div>
+          <div class="cat-name">セキュリティ</div><div class="cat-desc">OWASP・暗号化・CTF</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="cloud" style="--cc:#3b82f6">
+          <div class="cat-icon" style="background:#3b82f620;color:#3b82f6"><i class="fa-solid fa-cloud"></i></div>
+          <div class="cat-name">クラウド</div><div class="cat-desc">AWS・Docker・K8s・Terraform</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="business" style="--cc:#10b981">
+          <div class="cat-icon" style="background:#10b98120;color:#10b981"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="cat-name">ビジネス技術</div><div class="cat-desc">DevOps・スクラム・SRE</div>
+        </div>
+        <div class="cat-card" data-sv="courses" data-sc="paper" style="--cc:#6b7280">
+          <div class="cat-icon" style="background:#6b728020;color:#6b7280"><i class="fa-solid fa-file-lines"></i></div>
+          <div class="cat-name">論文・研究</div><div class="cat-desc">Transformer・BERT・Dynamo</div>
+        </div>
+      </div>
+
+      <div class="sec-head">レベルから探す</div>
+      <div class="lvl-grid">
+        <div class="lvl-card lvl-g" data-sv="courses"><div class="lvl-glow"></div><div class="lvl-icon">🌱</div><div class="lvl-title">初学者向け</div><div class="lvl-desc">プログラミング未経験・IT入門者</div></div>
+        <div class="lvl-card lvl-a" data-sv="courses"><div class="lvl-glow"></div><div class="lvl-icon">🔥</div><div class="lvl-title">中級者向け</div><div class="lvl-desc">基礎知識を持つ学生・社会人</div></div>
+        <div class="lvl-card lvl-r" data-sv="courses"><div class="lvl-glow"></div><div class="lvl-icon">🚀</div><div class="lvl-title">上級者向け</div><div class="lvl-desc">論文・専門技術・実務応用</div></div>
+      </div>
+    </div>
+
+    <!-- ===== COURSES ===== -->
+    <div id="view-courses" class="view hidden">
+      <div class="courses-top">
+        <div class="page-title">コース一覧</div>
+        <div class="result-badge"><i class="fa-solid fa-layer-group"></i><span id="result-count"></span></div>
+      </div>
+      <div class="filter-panel">
+        <div class="filter-inner">
+          <div class="frow">
+            <span class="flabel">カテゴリー</span>
+            <div class="chips" id="cat-chips"></div>
+          </div>
+          <div class="frow">
+            <span class="flabel">レベル</span>
+            <div class="chips">
+              <button class="chip on" data-lf="all">すべて</button>
+              <button class="chip" data-lf="beginner">🌱 初学者</button>
+              <button class="chip" data-lf="intermediate">🔥 中級者</button>
+              <button class="chip" data-lf="advanced">🚀 上級者</button>
+            </div>
+            <span class="flabel" style="margin-left:12px">タイプ</span>
+            <div class="chips">
+              <button class="chip on" data-tf="all">すべて</button>
+              <button class="chip" data-tf="youtube"><i class="fa-brands fa-youtube"></i>YouTube</button>
+              <button class="chip" data-tf="paper"><i class="fa-solid fa-file-lines"></i>論文</button>
+              <button class="chip" data-tf="article"><i class="fa-solid fa-book-open"></i>記事</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="card-grid"></div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div id="view-dashboard" class="view hidden">
+      <div class="ph"><h1 class="page-title">ダッシュボード</h1><p>あなたの学習進捗・お気に入り・保存状況を一目で確認</p></div>
+      <div class="dash-top">
+        <div class="dpanel">
+          <div class="dpanel-title"><i class="fa-solid fa-chart-pie"></i>総合進捗</div>
+          <div class="ring-wrap">
+            <div style="position:relative">
+              <svg class="ring-svg" width="128" height="128" viewBox="0 0 128 128">
+                <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#818cf8"/></linearGradient></defs>
+                <circle id="progress-ring-bg" cx="64" cy="64" r="54" fill="none" stroke-width="11"/>
+                <circle id="progress-ring-circle" cx="64" cy="64" r="54" fill="none" stroke-width="11" stroke-dasharray="339.3" stroke-dashoffset="339.3"/>
+              </svg>
+              <div class="ring-center"><div class="ring-pct" id="stat-pct">0%</div><div class="ring-lbl">完了率</div></div>
+            </div>
+            <div class="mini-stats">
+              <div class="mstat hi"><div class="mn" id="stat-done">0</div><div class="ml">完了</div></div>
+              <div class="mstat"><div class="mn" id="stat-wip">0</div><div class="ml">学習中</div></div>
+              <div class="mstat"><div class="mn" id="stat-fav">0</div><div class="ml">お気に入り</div></div>
+              <div class="mstat"><div class="mn" id="stat-bk">0</div><div class="ml">保存済み</div></div>
+            </div>
+            <div class="total-note">全 <span id="stat-total">0</span> コース中</div>
+          </div>
+        </div>
+        <div class="dpanel">
+          <div class="dpanel-title"><i class="fa-solid fa-bars-progress"></i>カテゴリー別進捗</div>
+          <div class="cplist" id="cat-prog-list"></div>
+        </div>
+      </div>
+      <div class="dpanel">
+        <div class="dpanel-title"><i class="fa-solid fa-clock-rotate-left"></i>最近の学習</div>
+        <div id="recent-grid" style="margin-top:16px"></div>
+      </div>
+    </div>
+
+    <!-- ===== FAVORITES ===== -->
+    <div id="view-favorites" class="view hidden">
+      <div class="ph"><h1 class="page-title">お気に入り</h1><p>ハートを付けたコースが表示されます</p></div>
+      <div id="fav-grid"></div>
+    </div>
+
+    <!-- ===== BOOKMARKS ===== -->
+    <div id="view-bookmarks" class="view hidden">
+      <div class="ph"><h1 class="page-title">保存済み</h1><p>ブックマークしたコースが表示されます</p></div>
+      <div id="bookmark-grid"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
